@@ -1,12 +1,13 @@
 const express = require('express');
 const path = require('path');
-const uuidv4 = require('uuid/v4');
+const { uuid } = require('uuidv4');
 const app = express();
+
 
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
+
 
 const db = [
     { id: 1, author: 'John Doe', text: 'This company is worth every coin!' },
@@ -27,7 +28,7 @@ app.get('/testimonials', (req, res) => {
 
   app.post('/testimonials', (req, res) => {
     const { author, text } = req.body;
-    const id = uuidv4();
+    const id =uuid();
     res.json({ message: 'OK' });
   });
 
@@ -38,6 +39,10 @@ res.json({ message: 'OK' });
 
   app.delete('/testimonials/:id', (req, res) => {
     res.json({ message: 'OK' });
+  });
+
+  app.use((req, res) => {
+    res.status(404).json({ message: 'Not found...' });
   });
 
 app.listen(8000, () => {
