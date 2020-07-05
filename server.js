@@ -16,7 +16,7 @@ app.use('/api/', seatsRoutes);
 
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Not found...' });
+  res.status(404).json({ message: 'Not found' });
 });
 
 app.listen(8000, () => {
