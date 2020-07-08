@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db.js');
+const db = require('../db');
 
 router.route('/seats').get((req, res) => {
+  console.log(db.seats)
   res.json(db.seats);
 });
 
@@ -19,7 +20,7 @@ router.route('/seats:id').delete((req, res) => {
 });
 
 router.route('/seats/:id').put((req, res) => {
-  res.json({ message: 'ok' });
+  res.json({ message: 'ok' }); //nie zwraca info o miejscu
 });
 
 module.exports = router;
