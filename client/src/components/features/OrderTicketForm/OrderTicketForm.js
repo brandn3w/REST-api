@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Row, Col, Alert, Progress } from
 
 import './OrderTicketForm.scss';
 import SeatChooser from './../SeatChooser/SeatChooserContainer';
-//import { loadSeats } from '../../../redux/seatsRedux';
+
 
 class OrderTicketForm extends React.Component {
 

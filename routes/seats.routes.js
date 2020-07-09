@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { uuid } = require('uuidv4');
 
 router.route('/seats').get((req, res) => {
   console.log(db.seats)
@@ -12,7 +13,9 @@ router.route('/seats/:id').get((req, res) => {
 });
 
 router.route('/seats').post((req, res) => {
-  res.json({ message: 'ok' });
+  const { day, seat, client, email } = req.body;
+  const id = uuid
+  res.json(db.seats.push({ id: id, day: day, seat: seat, client: client, email: email }));
 });
 
 router.route('/seats:id').delete((req, res) => {
@@ -20,7 +23,7 @@ router.route('/seats:id').delete((req, res) => {
 });
 
 router.route('/seats/:id').put((req, res) => {
-  res.json({ message: 'ok' }); //nie zwraca info o miejscu
+  res.json({ message: 'ok' });
 });
 
 module.exports = router;
