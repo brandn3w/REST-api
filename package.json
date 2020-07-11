@@ -15,12 +15,15 @@
     "redux-thunk": "^2.3.0",
     "uuidv4": "^6.1.1"
   },
+  "devDependencies": {
+      "yarn":"^1.22.4"
+  },
   "scripts": {
     "start": "node server.js",
-    "build": "cd client && npm install && npm build",
+    "build": "cd client && yarn install && yarn build",
     "server": "nodemon server.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client": "yarn run start --prefix client",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\""
 
   }
   
