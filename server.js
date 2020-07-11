@@ -12,23 +12,29 @@ app.use(express.json());
 //STATIC
 app.use(cors());
 
-if (process.env.NODE_ENV === "production") {
-  // get directory where is index.html
-  const root = path.join(__dirname, 'client', 'build');
-  //express.use static with the directory
-  app.use(express.static(root));
-  //express get request any (*) root, please use file that is on root directory configure above.
-  app.get("*", (req, res) => {
-    res.sendFile('index.html', { root });
-  });
+app.use(express.static(path.join(__dirname, '/client/build/index.html')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
-}
-else {
-  app.use(express.static(path.join(__dirname, '/client/build/index.html')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/build/index.html'));
-  });
-}
+
+// if (process.env.NODE_ENV === "production") {
+//   // get directory where is index.html
+//   const root = path.join(__dirname, 'client', 'build');
+//   //express.use static with the directory
+//   app.use(express.static(root));
+//   //express get request any (*) root, please use file that is on root directory configure above.
+//   app.get("*", (req, res) => {
+//     res.sendFile('index.html', { root });
+//   });
+
+//}
+// else {
+//   app.use(express.static(path.join(__dirname, '/client/build/index.html')));
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '/client/build/index.html'));
+//   });
+// }
 
 //Dynamic Api
 
