@@ -4,6 +4,7 @@
     "bootstrap": "^4.5.0",
     "cors": "^2.8.5",
     "express": "4.17.1",
+    "mongodb": "3.3.2",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -13,10 +14,11 @@
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "socket.io": "^2.3.0",
     "uuidv4": "^6.1.1"
   },
   "devDependencies": {
-      "yarn":"^1.22.4"
+    "yarn": "^1.22.4"
   },
   "scripts": {
     "start": "node server.js",
@@ -24,7 +26,5 @@
     "server": "nodemon server.js",
     "client": "yarn run start --prefix client",
     "dev": "concurrently \"yarn run server\" \"yarn run client\""
-
   }
-  
 }
