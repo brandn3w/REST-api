@@ -1,29 +1,18 @@
+
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
-const { uuid } = require('uuidv4');
+const uuidv4 = require('uuid/v4');
 
-router.route('/seats').get((req, res) => {
-  console.log(db.seats)
-  res.json(db.seats);
-});
+const SeatController = require('../controllers/seats.controller');
 
-router.route('/seats/:id').get((req, res) => {
-  res.json(db.seats[req.params.id - 1]);
-});
+router.route('/seats').get(SeatController.getAll);
 
-router.route('/seats').post((req, res) => {
-  const { day, seat, client, email } = req.body;
-  const id = uuid
-  res.json(db.seats.push({ id: id, day: day, seat: seat, client: client, email: email }));
-});
+router.route('/seats/:id').get(SeatController.getOne);
 
-router.route('/seats:id').delete((req, res) => {
-  res.json({ message: 'ok' });
-});
+router.route('/seats').post(SeatController.post);
 
-router.route('/seats/:id').put((req, res) => {
-  res.json({ message: 'ok' });
-});
+router.route('/seats/:id').delete(SeatController.delete);
+
+router.route('/seats/:id').put(SeatController.put);
 
 module.exports = router;

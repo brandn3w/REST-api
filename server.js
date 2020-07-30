@@ -1,47 +1,56 @@
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const socket = require('socket.io');
-const mongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
+
 const app = express();
 
-
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cors());
-//STATIC
-  // get directory where is index.html
-const root = path.join(__dirname, 'client', 'build');
-  //express.use static with the directory
-app.use(express.static(root));
-  //express get request any (*) root, please use file that is on root directory configure above.
-app.get("*", (req, res) => {
-    res.sendFile('index.html', { root });
-  });
 
-//Dynamic Api
+app.use(express.json());
+
+app.use(express.static(path.join(__dirname + '/client/build')));
+
+app.use(cors());
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 app.use('/api/', testimonialsRoutes);
 app.use('/api/', concertsRoutes);
 app.use('/api/', seatsRoutes);
 
-app.use((req, res) => {
-  res.status(404).json({ message: 'Not found' });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-  if (err){
-    console.log(err);
-  }
-  else {
-    console.log('Successfully connected to the database');
-  }
-}
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not found...' });
+});
+
+mongoose.connect('mongodb://localhost:27017/NewWaveDB', {userNewUrlParser: true, userUnifiedTopology: true });
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+
+db.on('error', err => console.log('Error' + err));
 
 const server = app.listen(process.env.PORT || 8000, () => {
-  console.log('Server is running on port: 8000');
+  console.log('Server is running on port 8000');
 });
 
+const io = socket(server);
+
+io.on('connection', (socket) => {
+  console.log('New socket!');
+});
